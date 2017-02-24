@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 /*
@@ -30,25 +23,16 @@ namespace SaveMyFiles
             //Show the dialog 
             DialogResult dRes = ofDiag.ShowDialog();
 
-            string fPath = null;
-            string FileName = null;
-
             if (dRes == DialogResult.OK)
-            {
-                fPath = ofDiag.FileName;
-                FileName = System.IO.Path.GetFileName(ofDiag.FileName);
+            {//Set the file location and the name of the file 
+                txtSelectedFileLocation.Text = ofDiag.FileName;
+                txtFileName.Text = System.IO.Path.GetFileName(ofDiag.FileName);
             }
-
-            //Now that we have the filename and path, load it into the textbox
-            txtSelectedFileLocation.Text = fPath;
-            txtFileName.Text = FileName;
         }
 
         private void btnBackupLocation_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofDiag = new OpenFileDialog();
-
-            string fPath = null;
 
             //Show the dialog
             using (var fbd = new FolderBrowserDialog())
@@ -56,8 +40,8 @@ namespace SaveMyFiles
                 DialogResult result = fbd.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrEmpty(fbd.SelectedPath))
-                {
-                    fPath = fbd.SelectedPath;
+                {//Set the backup location in the textbox
+                    txtSelectedBackupLocation.Text = fbd.SelectedPath;
                 }
                 else
                 {
@@ -65,9 +49,6 @@ namespace SaveMyFiles
                     return;
                 }
             }
-
-            //Now that we have the filename and path, load it into the textbox
-            txtSelectedBackupLocation.Text = fPath;
         }
 
         private void btnBackup_Click(object sender, EventArgs e)
